@@ -4,34 +4,79 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punny</title>
+
+    <!-- Primary Meta Tags -->
+    <title>🤣 PUNNY</title>
+    <meta name="title" content="It's a pun life!">
+    <meta name="theme-color" content="#FBBF24"/>
+    <meta name="description" content="Find, share and understand puns, idioms and expressions!">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ohohohobrien.github.io/punny/">
+    <meta property="og:title" content="It's a pun life!">
+    <meta property="og:description" content="Find, share and understand puns, idioms and expressions!">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Emojione_1F602.svg/1200px-Emojione_1F602.svg.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ohohohobrien.github.io/punny/">
+    <meta property="twitter:title" content="It's a pun life!">
+    <meta property="twitter:description" content="Find, share and understand puns, idioms and expressions!">
+    <meta property="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Emojione_1F602.svg/1200px-Emojione_1F602.svg.png">
+
     <link rel="stylesheet" href="styles.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="/public/main.js"></script>
+
 </head>
-<body class="text-gray-800 font-roboto bg-contain bg-gradient-to-br to-purple-300 from-blue-400">
+
+<body class="text-gray-800 dark:text-white font-roboto bg-contain bg-gradient-to-br to-purple-300 from-blue-400 dark:to-blue-800 dark:from-blue-900">
 
     <div><!-- content wrapper -->
-        <div>
-            <nav class="flex justify-between bg-yellow-400 shadow-sm">
+        <div class="fixed w-full z-10 top-0" x-data="{selected:null}"> 
+            <nav class="flex justify-between bg-yellow-400 dark:bg-gray-800 shadow-sm">
                 <div>
                     <h1 class="font-bold uppercase p-4">
                         <a href="#">🤣 Punny</a>
                     </h1>
                 </div>
-                <button class="mr-4">
+                <button class="mr-4" type="button" @click="selected !== 2 ? selected = 2 : selected = null"> 
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </nav>
+            <div class="bg-yellow-400 dark:bg-gray-800 shadow-sm max-h-0 relative overflow-hidden transition-all duration-700" x-ref="container2" x-bind:style="selected == 2 ? 'max-height: ' + $refs.container2.scrollHeight + 'px' : ''">
+                <div class="p-1 flex justify-center">
+                    <!-- Toggle for dark mode -->
+                    <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <div class="flex items-center justify-center mb-12">
+                        <label for="toggleB" class="flex items-center cursor-pointer">
+                        <!-- toggle -->
+                        <div class="relative">
+                            <!-- input -->
+                            <input type="checkbox" id="toggleB" class="sr-only">
+                            <!-- line -->
+                            <div class="block bg-gray-600 w-14 h-8 rounded-full"></div>
+                            <!-- dot -->
+                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition"></div>
+                        </div>
+                        </label>
+                    </div>
+                    <svg class="w-6 h-6 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </div>
+            </div>
         </div> <!-- end nav -->
 
+        <div class="h-20"></div>
+
         <main class="px-2 py-2 mt-5">
-            <div class="bg-yellow-300 px-5 py-10 rounded-sm shadow-2xl">
-                <p class="text-4xl text-shadow-md">Why did <span class="text-white font-bold">Adele</span> cross the road? To say <span class="text-white font-bold">hello from the other side</span>.</p>
+            <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm shadow-2xl">
+                <p class="text-4xl text-shadow-md">Why did <span class="text-white dark:text-yellow-400 font-bold">Adele</span> cross the road? To say <span class="text-white dark:text-yellow-400 font-bold">hello from the other side</span>.</p>
             </div>
         </main>
 
         <section class="px-2 py-2 mt-5" x-data="{selected:null}">
-            <div class="bg-yellow-300 rounded-sm shadow-2xl">
+            <div class="bg-yellow-300 dark:bg-gray-800 rounded-sm shadow-2xl">
                 <button class="w-full" type="button" @click="selected !== 1 ? selected = 1 : selected = null">
                     <div class="flex justify-between items-center px-5 py-5">
                         <p class="text-3xl italic font-thin">explanation</p>
@@ -39,8 +84,8 @@
                     </div>
                 </button>
                 <div id="explanation-content" class="text-2xl max-h-0 relative overflow-hidden transition-all duration-700 px-5" x-ref="container1" x-bind:style="selected == 1 ? 'max-height: ' + $refs.container1.scrollHeight + 'px' : ''">
-                    <p id="explanation-0" class="mt-10"><span class="text-white font-bold">Adele</span> is a famous singer in the UK.</p>
-                    <p id="explanation-1" class="mt-10">"<span class="text-white font-bold">Hello from the other side</span>" is one of Adele's<s></s> famous songs.</p>
+                    <p id="explanation-0" class="mt-10"><span class="text-white dark:text-yellow-400 font-bold">Adele</span> is a famous singer in the UK.</p>
+                    <p id="explanation-1" class="mt-10">"<span class="text-white dark:text-yellow-400 font-bold">Hello from the other side</span>" is one of Adele's<s></s> famous songs.</p>
                     <p id="explanation-3" class="mt-10">“Why did <span class="font-bold italic">X</span> cross the road?” is a common joke structure in English.</p>
                     <p id="explanation-4" class="mt-10">This pun has two meanings:
                         <ul class="mt-5 p-5 space-y-5 list-disc">
@@ -58,7 +103,7 @@
         </section>
 
         <section class="px-2 py-2 mt-5">
-            <div class="bg-yellow-300 px-5 py-5 rounded-sm shadow-2xl">
+            <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-5 rounded-sm shadow-2xl">
                 <p class="text-3xl italic font-thin">do you like it?</p>
                 <div class="flex justify-between mt-8 text-3xl">
                     <button>
