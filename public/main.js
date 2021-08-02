@@ -29,6 +29,7 @@ function init() {
     reviewButtonGood.addEventListener('click', () => {stopAnimateClass(reviewButtonGood)});
     reviewButtonOk.addEventListener('click', () => {stopAnimateClass(reviewButtonOk)});
     reviewButtonBad.addEventListener('click', () => {stopAnimateClass(reviewButtonBad)});
+    loadListenersForExplanationText();
 }
 
 function stopAnimateClass(button) {
@@ -63,6 +64,21 @@ function stopAnimateClass(button) {
     button.classList.remove('duration-500');
     button.classList.remove('text-shadow-lg');
     button.classList.add('animate-spin');
+}
+
+// not finalised
+function loadListenersForExplanationText() {
+
+    // need some way to loop through explanation text
+
+    document.getElementById('explanation-0-link').addEventListener('click', () => {
+        scrollToTargetAdjusted('explanation-0')
+    })
+
+    document.getElementById('explanation-1-link').addEventListener('click', () => {
+        scrollToTargetAdjusted('explanation-1')
+    })
+
 }
 
 function scrollToTargetAdjusted(elementId){ 

@@ -27,7 +27,7 @@
 
     <link rel="stylesheet" href="styles.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="/public/main.js"></script>
+    <script async src="/public/main.js"></script>
 
 </head>
 
@@ -91,7 +91,7 @@
         
             <main class="px-2 py-2 mt-5 md:px-10">
                 <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm shadow-2xl">
-                    <p class="text-4xl text-shadow-md">Why did <span class="text-white dark:text-yellow-400 font-bold"><a class="cursor-pointer" @click="selected = 1; scrollToTargetAdjusted('explanation-0');">Adele</a></span> cross the road? </br></br> To say <span class="text-white dark:text-yellow-400 font-bold"><a class="cursor-pointer" @click="selected = 1; scrollToTargetAdjusted('explanation-1');">hello from the other side</a></span>.</p>
+                    <p class="text-4xl text-shadow-md">Why did <span class="text-white dark:text-yellow-400 font-bold"><a id="explanation-0-link" class="cursor-pointer" @click="selected = 1;">Adele</a></span> cross the road? </br></br> To say <span class="text-white dark:text-yellow-400 font-bold"><a id="explanation-1-link" class="cursor-pointer" @click="selected = 1;">hello from the other side</a></span>.</p>
                 </div>
             </main>
 
