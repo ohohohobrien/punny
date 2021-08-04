@@ -11,9 +11,11 @@ function init() {
 
 
     const punTextarea = document.getElementById('punContent');
+    const punTextareaDisplay = document.getElementById('punContentDisplay');
 
     punTextarea.addEventListener('input', () => {
         pun.content = punTextarea.value;
+        punTextareaDisplay.value = pun.content;
 
         if (pun.content.length > 3) {
             enableNextButton();
