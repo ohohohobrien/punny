@@ -1,11 +1,14 @@
 module.exports = {
-    purge: 
+    purge: [],
+    /*
+
+    REPLACE PURGE [] WITH THE BELOW WHEN BUILDING FOR PRODUCTION
 
     {
       enabled: true,
       content: ['./public/*.html', './public/*.js'],
     },
-   
+    */
     darkMode: 'class', // or 'media' or 'class'
     theme: {
       extend: {
