@@ -33,7 +33,16 @@ function init() {
         }
     })
 
+    /*
     punTextareaDisplay.addEventListener('mouseup', selectableTextAreaMouseUp);
+    if (mobileDeviceDetected) {
+        punTextareaDisplay.addEventListener('touchend', selectableTextAreaMouseUp);
+        punTextareaDisplay.addEventListener('pointerup', selectableTextAreaMouseUp);
+        punTextareaDisplay.addEventListener('selectionchange', selectableTextAreaMouseUp);
+    }
+    */
+    document.addEventListener('selectionchange', selectableTextAreaMouseUp);
+    punTextareaDisplay.addEventListener('mouseup', moveQuoteButton);
 
     const nextButton = document.getElementById('nextButton');
 
@@ -89,29 +98,17 @@ function documentMouseDown(event) {
     if (getComputedStyle(quoteButton).display === "block" && event.target.id !== "quoteButton") {
         setTimeout(() => {
             quoteButton.style.display = "none";
-        }, 500);
+        }, 300);
         window.getSelection().empty();
     }
 }
 
-function selectableTextAreaMouseUp(event) {
+function moveQuoteButton(event) {
     const quoteButton = document.getElementById('quoteButton');
-    const getSelection = window.getSelection();
-    const selectedText = getSelection.toString().trim();
-    pun.currentSelectedText = selectedText;
-    pun.startingRange = getSelection.anchorOffset;
-    pun.endingRange = getSelection.focusOffset;
-    if (mobileDeviceDetected) {
+
+    if (!mobileDeviceDetected) {
         setTimeout(() => {
-            if (selectedText.length > 0) {
-                console.log("touchscreen highlighting detected");
-                quoteButton.style.display = "block";
-                quoteButton.style.position = "static";
-            }
-        }, 0);
-    } else {
-        setTimeout(() => {
-            if (selectedText.length > 0) {
+            if (pun.currentSelectedText.length > 0) {
                 console.log("PC highlighting detected");
                 quoteButton.style.display = "block";
                 quoteButton.style.position = "absolute";
@@ -123,6 +120,36 @@ function selectableTextAreaMouseUp(event) {
                 quoteButton.style.top = `${y - quoteButtonHeight*1.5}px`;
             }
         }, 0);
+    }
+}
+
+function selectableTextAreaMouseUp(event) {
+
+    const getSelection = window.getSelection();
+
+    let detectedNodeID = null;
+
+    try {
+        detectedNodeID = getSelection.anchorNode.parentNode.id;
+    } catch {
+        detectedNodeID = null;
+    }
+
+    if (detectedNodeID === "punContentDisplay") {
+        //const quoteButton = document.getElementById('quoteButton');
+        const selectedText = getSelection.toString().trim();
+        pun.currentSelectedText = selectedText;
+        pun.startingRange = getSelection.anchorOffset;
+        pun.endingRange = getSelection.focusOffset;
+        if (mobileDeviceDetected) {
+            setTimeout(() => {
+                if (selectedText.length > 0) {
+                    console.log("touchscreen highlighting detected");
+                    quoteButton.style.display = "block";
+                    quoteButton.style.position = "static";
+                }
+            }, 0);
+        }
     }
 }
 
@@ -190,6 +217,7 @@ function createExplanationContainer(explanationString) {
     const punExplanationDiv = document.createElement('div');
     punExplanationDiv.classList.add("px-2", "py-2", "mt-5", "md:px-10", "lg:px-20");
     punExplanationDiv.id = `punExplanationDiv-${explanationIncrementer}`;
+    punExplanationDiv.dataset.idNumber = `${explanationIncrementer}`;
 
     // text container
     const punDivInner = document.createElement('div');
@@ -277,7 +305,11 @@ function createExplanationContainer(explanationString) {
     buttonClose.addEventListener('click', () => {
         
         // delete object data
-        delete pun.explanation[`${explanationIncrementer}`];
+        console.log("Delete the following object:");
+        console.log(pun.explanation[`${punExplanationDiv.dataset.idNumber}`]);
+        delete pun.explanation[`${punExplanationDiv.dataset.idNumber}`];
+        console.log("Should be deleted now - is it still here?");
+        console.log(pun.explanation[`${punExplanationDiv.dataset.idNumber}`]);
 
         //modify next page button to disabled if all explanation containers removed
         if (Object.keys(pun.explanation).length === 0) {
