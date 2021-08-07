@@ -12,6 +12,9 @@ let nextPageButtonEnabled = false;
 let nextPageButton2Enabled = false;
 let explanationIncrementer = 0;
 
+const mobileDeviceDetected = isMobile();
+console.log(mobileDeviceDetected);
+
 function init() {
 
     const punTextarea = document.getElementById('punContent');
@@ -98,18 +101,29 @@ function selectableTextAreaMouseUp(event) {
     pun.currentSelectedText = selectedText;
     pun.startingRange = getSelection.anchorOffset;
     pun.endingRange = getSelection.focusOffset;
-    console.log(pun.currentSelectedText);
-    setTimeout(() => {
-        if (selectedText.length > 0) {
-            quoteButton.style.display = "block";
-            const x = event.pageX;
-            const y = event.pageY;
-            const quoteButtonWidth = Number(getComputedStyle(quoteButton).width.slice(0, -2)); //"40px" - slice off px
-            const quoteButtonHeight = Number(getComputedStyle(quoteButton).height.slice(0, -2)); //convert to number to use in calculation
-            quoteButton.style.left = `${x - quoteButtonWidth*0.5}px`;
-            quoteButton.style.top = `${y - quoteButtonHeight*1.5}px`;
-        }
-    }, 0);
+    if (mobileDeviceDetected) {
+        setTimeout(() => {
+            if (selectedText.length > 0) {
+                console.log("touchscreen highlighting detected");
+                quoteButton.style.display = "block";
+                quoteButton.style.position = "static";
+            }
+        }, 0);
+    } else {
+        setTimeout(() => {
+            if (selectedText.length > 0) {
+                console.log("PC highlighting detected");
+                quoteButton.style.display = "block";
+                quoteButton.style.position = "absolute";
+                const x = event.pageX;
+                const y = event.pageY;
+                const quoteButtonWidth = Number(getComputedStyle(quoteButton).width.slice(0, -2)); //"40px" - slice off px
+                const quoteButtonHeight = Number(getComputedStyle(quoteButton).height.slice(0, -2)); //convert to number to use in calculation
+                quoteButton.style.left = `${x - quoteButtonWidth*0.5}px`;
+                quoteButton.style.top = `${y - quoteButtonHeight*1.5}px`;
+            }
+        }, 0);
+    }
 }
 
 function enableNextButton() {
@@ -398,3 +412,5 @@ function removeErrorDisplayForZeroExplainers() {
 
     explanationContentHelper.style.display = "none";
 }
+
+function isMobile() { return ('ontouchstart' in document.documentElement); }
