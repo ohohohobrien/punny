@@ -597,6 +597,10 @@ video {
   border-width: 0;
 }
 
+.static{
+  position: static;
+}
+
 .fixed{
   position: fixed;
 }
@@ -676,6 +680,10 @@ video {
 
 .table{
   display: table;
+}
+
+.contents{
+  display: contents;
 }
 
 .hidden{
@@ -1050,6 +1058,11 @@ video {
   line-height: 1rem;
 }
 
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 .text-2xl{
   font-size: 1.5rem;
   line-height: 2rem;
@@ -1240,6 +1253,11 @@ input:checked ~ .dot {
 
   .md\:pl-10{
     padding-left: 2.5rem;
+  }
+
+  .md\:text-2xl{
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
 

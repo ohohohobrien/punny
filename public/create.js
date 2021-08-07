@@ -33,26 +33,51 @@ function init() {
         }
     })
 
-    /*
-    punTextareaDisplay.addEventListener('mouseup', selectableTextAreaMouseUp);
-    if (mobileDeviceDetected) {
-        punTextareaDisplay.addEventListener('touchend', selectableTextAreaMouseUp);
-        punTextareaDisplay.addEventListener('pointerup', selectableTextAreaMouseUp);
-        punTextareaDisplay.addEventListener('selectionchange', selectableTextAreaMouseUp);
-    }
-    */
     document.addEventListener('selectionchange', selectableTextAreaMouseUp);
     punTextareaDisplay.addEventListener('mouseup', moveQuoteButton);
 
     const nextButton = document.getElementById('nextButton');
 
+    const section1 = document.getElementById("section1");
+    const section2 = document.getElementById("section2");
+
     nextButton.addEventListener('click', () => {
         if (nextPageButtonEnabled) {
-            alert('Next page!');
             explanationIncrementer = 0;
+            pun.explanation = {};
+            // add pretty animations at some point zzz
+            
+            // hide current page
+            section1.style.display = "none";
+
+            // show new page
+            section2.style.display = "block";
+            scrollToTargetAdjusted('section2');
+
         } else {
             addHelperForPun();
         }
+    });
+
+    const backButton = document.getElementById('backButton');
+
+    backButton.addEventListener('click', () => {
+        // add pretty animations at some point zzz
+            
+        // hide current page
+        section2.style.display = "none";
+
+        // show new page
+        section1.style.display = "block";
+        scrollToTargetAdjusted('section1');
+
+        // delete the elements and remove JSON contents
+        pun.explanation = {};
+
+        while(explanationInsertContainer.children.length > 0) {
+            explanationInsertContainer.children[0].remove();
+        }
+
     });
 
     const nextButton2 = document.getElementById('nextButton2');
@@ -70,6 +95,7 @@ function init() {
 
         removeErrorDisplayForZeroExplainers();
         nextButton2.classList.add("opacity-40");
+        updateExplanationContainerNumbers();
     });
 
     document.addEventListener("mousedown", documentMouseDown);
@@ -81,6 +107,7 @@ function init() {
         explanationInsertContainer.append(createExplanationContainer("")); // send a blank "" string
         removeErrorDisplayForZeroExplainers();
         nextButton2.classList.add("opacity-40");
+        updateExplanationContainerNumbers();
     });
     
     nextButton2.addEventListener('click', () => {
@@ -229,6 +256,8 @@ function createExplanationContainer(explanationString) {
     punDivInnerHeader.classList.add("text-2xl", "text-shadow-md", "mb-4");
     if (explanationString.length > 0) punDivInnerHeader.innerHTML = `Explanation ${explanationIncrementer} - ${explanationString}`
     else punDivInnerHeader.innerHTML = `Explanation ${explanationIncrementer}`;
+    // js accessor class list
+    punDivInnerHeader.classList.add("js-stringReplace");
     punDivInner.append(punDivInnerHeader);
 
     const punTextArea = document.createElement('textarea');
@@ -266,7 +295,7 @@ function createExplanationContainer(explanationString) {
 
     // attach listener to text area
     punTextArea.addEventListener("input", () => {
-        pun.explanation[`${explanationIncrementer}`].explanationContent = punTextArea.value;
+        pun.explanation[`${punExplanationDiv.dataset.idNumber}`].explanationContent = punTextArea.value;
         enableNextButton2();
         if (punTextArea.value.length > 10) {
             explanationHelperText.style.display = "none";
@@ -317,29 +346,17 @@ function createExplanationContainer(explanationString) {
         }
 
         punExplanationDiv.remove();
+
+        updateExplanationContainerNumbers();
     });
 
+    scrollToTargetAdjusted(punExplanationDiv.id);
+    setTimeout(function() {
+        punTextArea.focus();
+    }, 500);
+    
     return punExplanationDiv;
 
-    /* create the below element
-
-        // note that to create SVG / path elements, createElementNS('http://www.w3.org/2000/svg','X') is required
-    
-        <div id="punExplanationDiv" class="px-2 py-2 mt-5 md:px-10 lg:px-20">
-            <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm rounded-br-none shadow-2xl">
-                <h3 class="text-2xl text-shadow-md mb-4">Explanation 1:</h3>
-                <textarea id="punExplanationContent-0" class="text-2xl text-shadow-md w-full min-h-0 p-5 resize-y rounded-sm bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="punExplanation" id="" cols="3" rows="3" placeholder="Write your explanation here!"></textarea>
-            </div>
-            <div class="flex justify-end">
-                <button id="nextButton2" class="bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm rounded-t-none shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="remove explanation">
-                    <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    
-    */
 }
 
 function enableNextButton2() {
@@ -446,3 +463,21 @@ function removeErrorDisplayForZeroExplainers() {
 }
 
 function isMobile() { return ('ontouchstart' in document.documentElement); }
+
+function updateExplanationContainerNumbers() {
+
+    if (Object.keys(pun.explanation).length !== 0) {
+
+        const regex = new RegExp(/\d+/gm);
+        let increment = 1;
+        
+        const arrayOfElements = document.getElementsByClassName('js-stringReplace')
+        
+        Array.prototype.forEach.call(arrayOfElements, function(element) {
+            element.innerHTML = element.innerHTML.toString().replace(regex, increment);
+            increment += 1;
+        });
+    
+    }
+
+}
