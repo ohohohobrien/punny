@@ -96,7 +96,7 @@
         
             <main class="px-2 py-2 mt-5 md:px-10 lg:px-20">
                 <div id="punContentDiv" class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm shadow-2xl">
-                    <textarea id="punContent" class="text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="punContent" id="" cols="5" rows="5" placeholder="Write your pun here!"></textarea>
+                    <textarea id="punContent" class="text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm resize-y bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="punContent" id="" cols="5" rows="5" placeholder="Write your pun here!"></textarea>
                     <span style="display: none;" class="text-xs font-bold text-red-700" id="punContentHelper">Please enter a pun with more than 3 characters.</span>
                 </div>
             </main>
@@ -104,7 +104,7 @@
         </div>
 
         <div class="flex justify-end px-2 py-2 mt-5 md:px-10 lg:px-20">
-            <button id="nextButton" class="opacity-40 bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500">
+            <button id="nextButton" class="opacity-40 bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="next page">
                 <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
         </div>
@@ -114,32 +114,62 @@
                 <p class="text-center text-3xl text-shadow-md p-4">✍️ add some explanation to help users understand 🤔</p>
                 <ul class="list-disc space-y-8 p-4 md:p-10 lg:p-10 md:mx-4 lg:mx-8">
                     <li>
-                        <span class="text-2xl text-shadow-md"">highlight important parts of the pun and click the + button to link an explanation to that text</span>
+                        <span class="text-2xl text-shadow-md">highlight important parts of the pun and click the + button to link an explanation to that text</span>
                     </li>
                     <li>
-                        <span class="text-2xl text-shadow-md"">click the plus button to add extra information</span>
+                        <span class="text-2xl text-shadow-md">click the plus button to add extra information</span>
                     </li>
                 </ul>
             </div>
         
             <main class="px-2 py-2 mt-5 md:px-10 lg:px-20">
-                <div id="punContentDiv" class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm shadow-2xl">
-                    <textarea disabled id="punContentDisplay" class="text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="punContent" id="" cols="5" rows="5" placeholder="Write your pun here!"></textarea>
-                    <span style="display: none;" class="text-xs font-bold text-red-700" id="punContentHelper">Please enter a pun with more than 3 characters.</span>
+                <div id="punContentDisplayDiv" class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm rounded-br-none shadow-2xl">
+                    <!--
+                        need to style this more
+                    -->
+                    <h3 class="text-2xl text-shadow-md mb-4">Your pun:</h3>
+                    <p id="punContentDisplay" class="whitespace-pre text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500"></p>
+                    <span style="display: none;" class="text-xs font-bold text-red-700" id="explanationContentHelper">Please make at least 1 explanation for this pun.</span>
+                </div>
+                <button id="quoteButton" style="position: absolute; z-index: 10; display: none;" class="text-white bg-blue-400 hover:bg-blue-500 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-500 rounded-sm shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="add quote of selected text">
+                    <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                </button>
+                <div class="flex justify-end">
+                    <button id="addExplanationButton" class="bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm rounded-t-none shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="add explanation">
+                        <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    </button>
                 </div>
             </main>
 
+            <div id="punExplanationInsertContainer">
+                <!-- insert JS created elements here! -->
+            </div>
+            
+            <!-- testing purposes  
+                <div id="punExplanationDiv" class="px-2 py-2 mt-5 md:px-10 lg:px-20">
+                    <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm rounded-br-none shadow-2xl">
+                        <h3 class="text-2xl text-shadow-md mb-4">Explanation 1:</h3>
+                        <textarea id="punExplanationContent-0" class="text-2xl text-shadow-md w-full min-h-0 p-5 resize-y rounded-sm bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="punExplanation" id="" cols="3" rows="3" placeholder="Write your explanation here!"></textarea>
+                    </div>
+                    <div class="flex justify-end">
+                        <button id="nextButton2" class="bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm rounded-t-none shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="remove explanation">
+                            <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            -->
+
         </div>
 
-        <div class="flex float-right px-2 py-2 mt-5 md:px-10 lg:px-20">
-            <button id="nextButton2" class="opacity-40 bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500">
+        <div class="flex justify-end px-2 py-2 mt-5 md:px-10 lg:px-20">
+            <button id="nextButton2" class="opacity-40 bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="complete">
                 <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
         </div>
     </div>
 
     <!-- content footer-->
-    <footer class="bg-yellow-300 dark:bg-gray-800 p-5 dark:text-yellow-400 mt-20 md:mt-36 lg:mt-40">
+    <footer class="bg-yellow-300 dark:bg-gray-800 p-5 dark:text-yellow-400 mt-10 md:mt-16 lg:mt-24">
         <h2 class="flex justify-center">website made by Sean O'Brien</h2>
         <div class="flex justify-center space-x-4">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
