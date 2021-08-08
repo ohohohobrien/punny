@@ -119,7 +119,10 @@ function init() {
     nextButton2.addEventListener('click', () => {
         checkExplanationsCompleted();
         if (nextPageButton2Enabled === true) {
-            alert("next page baby")
+            // hide current page
+            section2.classList.remove("fadeIn");
+            section2.classList.add("fadeOut");
+            section2.addEventListener("animationend", pageFinishAnimation);
         }
     })
 
@@ -150,6 +153,19 @@ function pageGoForwardAnimation() {
     section2.style.display = "block";
     scrollToTargetAdjusted('section2');
     section1.removeEventListener("animationend", pageGoForwardAnimation);
+}
+
+function pageFinishAnimation() {
+
+    const section2 = document.getElementById("section2");
+    const section3 = document.getElementById("section3");
+
+    section2.style.display = "none";
+    section2.classList.remove("fadeOut");
+    section3.classList.add("fadeIn");
+    section3.style.display = "block";
+    scrollToTargetAdjusted('section3');
+    section2.removeEventListener("animationend", pageGoForwardAnimation);
 }
 
 function documentMouseDown(event) {

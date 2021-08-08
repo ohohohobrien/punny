@@ -1145,7 +1145,7 @@ video {
   color: rgba(251, 191, 36, var(--tw-text-opacity));
 }
 
-.underline{
+.hover\:underline:hover{
   text-decoration: underline;
 }
 
