@@ -40,7 +40,7 @@
             <nav class="flex justify-between bg-yellow-400 dark:bg-gray-800 shadow-sm">
                 <div>
                     <h1 class="font-bold uppercase p-4">
-                        <a href="#">🤣 Punny</a>
+                        <a href="./index.html">🤣 Punny</a>
                     </h1>
                 </div>
                 <button class="mr-4" type="button" @click="selected !== 2 ? selected = 2 : selected = null"> 
@@ -89,7 +89,7 @@
 
         <div class="h-20"></div>
 
-        <section id="section1">
+        <section id="section1" class="fadeIn">
             <div>
                 <div class="bg-yellow-300 dark:bg-gray-800 p-5 dark:text-yellow-400">
                     <p class="text-center text-3xl text-shadow-md p-4">✍️ write down your favourite pun below and click next! 🤣</p>
@@ -97,7 +97,7 @@
             
                 <main class="px-2 py-2 mt-5 md:px-10 lg:px-20">
                     <div id="punContentDiv" class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm shadow-2xl">
-                        <textarea id="punContent" class="text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm resize-y bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="punContent" id="" cols="5" rows="5" placeholder="Write your pun here!"></textarea>
+                        <textarea id="punContent" class="text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm resize-y bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="punContent" id="" cols="5" rows="5" placeholder="write your pun here!"></textarea>
                         <span style="display: none;" class="text-xs font-bold text-red-700" id="punContentHelper">Please enter a pun with more than 3 characters.</span>
                     </div>
                 </main>
@@ -130,12 +130,15 @@
                         <!--
                             need to style this more
                         -->
-                        <h3 class="text-2xl text-shadow-md mb-4">Your pun:</h3>
-                        <p id="punContentDisplay" class="whitespace-pre text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500"></p>
+                        <h3 class="text-2xl text-shadow-md mb-4 dark:text-yellow-400">your pun:</h3>
+                        <div class="">
+                            <p id="punContentDisplay" class="whitespace-pre-line text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500"></p>
+                        </div>
                         <span style="display: none;" class="text-xs font-bold text-red-700" id="explanationContentHelper">Please make at least 1 explanation for this pun.</span>
+                        <span style="display: none;" class="text-xs font-bold text-red-700" id="explanationContentHelperQuoteError">You already quoted this part for an explanation. Check out the preview below to see what you've highlighted.</span>
                     </div>
                     <div class="flex justify-end">
-                        <button id="quoteButton" style="z-index: 10; display: none;" class="text-white bg-blue-400 hover:bg-blue-500 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-500 rounded-sm shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="add quote of selected text">
+                        <button id="quoteButton" style="z-index: 20; display: none;" class="text-white bg-blue-400 hover:bg-blue-500 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-500 rounded-sm shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="add quote of selected text">
                             <svg class="w-6 h-6 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
                         </button>
                         <button id="addExplanationButton" class="bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm rounded-t-none shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="add explanation">
@@ -147,6 +150,16 @@
                 <div id="punExplanationInsertContainer">
                     <!-- insert JS created elements here! -->
                 </div>
+
+                <main class="px-2 py-2 mt-10 md:px-10 md:mt-24 lg:px-20 lg:mt-36">
+                    <div id="previewDisplayDiv" class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm rounded-br-none shadow-2xl divide-y-2 divide-black dark:divide-yellow-400">
+
+                        <h3 class="text-2xl text-shadow-md mb-4 dark:text-yellow-400">preview of what it will look like: 👇😂👇</h3>
+                        <div class="">
+                            <p id="previewContentDisplay" class="whitespace-pre-line text-4xl text-shadow-md w-full min-h-0 p-5 rounded-sm dark:text-white"></p>
+                        </div>
+                    </div>
+                </main>
 
             </div>
 

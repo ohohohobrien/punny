@@ -30,3 +30,33 @@ input:checked ~ .dot {
   transform: translateX(100%);
   background-color: #fbbf24;
 }
+
+@keyframes fadeOut {
+  0% {
+    opacity: 100%;
+  }
+
+  100% {
+    opacity: 0%;
+  }
+}
+
+.fadeOut {
+  animation-duration: 0.3s;
+  animation-name: fadeOut;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
+.fadeIn {
+  animation-duration: 0.3s;
+  animation-name: fadeIn;
+}

@@ -2,6 +2,7 @@ window.onload = init;
 
 let pun = {
     "content": "",
+    "styledContent": "",
     "explanation": {},
     "currentSelectedText": "",
     "startingRange": "",
@@ -13,7 +14,6 @@ let nextPageButton2Enabled = false;
 let explanationIncrementer = 0;
 
 const mobileDeviceDetected = isMobile();
-console.log(mobileDeviceDetected);
 
 function init() {
 
@@ -23,6 +23,7 @@ function init() {
 
     punTextarea.addEventListener('input', () => {
         pun.content = punTextarea.value;
+        pun.styledContent = pun.content;
         punTextareaDisplay.innerHTML = pun.content;
 
         if (pun.content.length > 3) {
@@ -40,19 +41,20 @@ function init() {
 
     const section1 = document.getElementById("section1");
     const section2 = document.getElementById("section2");
+    const previewPun = document.getElementById('previewContentDisplay');
 
     nextButton.addEventListener('click', () => {
         if (nextPageButtonEnabled) {
             explanationIncrementer = 0;
             pun.explanation = {};
+            previewPun.innerHTML = pun.content;
+
             // add pretty animations at some point zzz
             
             // hide current page
-            section1.style.display = "none";
-
-            // show new page
-            section2.style.display = "block";
-            scrollToTargetAdjusted('section2');
+            section1.classList.remove("fadeIn");
+            section1.classList.add("fadeOut");
+            section1.addEventListener("animationend", pageGoForwardAnimation);
 
         } else {
             addHelperForPun();
@@ -62,14 +64,11 @@ function init() {
     const backButton = document.getElementById('backButton');
 
     backButton.addEventListener('click', () => {
-        // add pretty animations at some point zzz
-            
-        // hide current page
-        section2.style.display = "none";
 
-        // show new page
-        section1.style.display = "block";
-        scrollToTargetAdjusted('section1');
+        // add pretty animations at some point zzz
+        section2.classList.remove("fadeIn");
+        section2.classList.add("fadeOut");
+        section2.addEventListener("animationend", pageGoBackAnimation);
 
         // delete the elements and remove JSON contents
         pun.explanation = {};
@@ -84,18 +83,25 @@ function init() {
     const quoteButton = document.getElementById('quoteButton');
 
     quoteButton.addEventListener('click', () => {
-        // testing
-        console.log("pun.currentSelectedText shows:");
-        console.log(pun.currentSelectedText);
-        
-        if (pun.currentSelectedText.length > 0) {
-            explanationIncrementer += 1;
-            explanationInsertContainer.append(createExplanationContainer(pun.currentSelectedText)); // send selected text as string
+
+        let notQuotedPreviously = true;
+        notQuotedPreviously = checkIfQuotedBefore();
+
+        if (notQuotedPreviously === true) {
+            if (pun.currentSelectedText.length > 0) {
+                explanationIncrementer += 1;
+                explanationInsertContainer.append(createExplanationContainer(pun.currentSelectedText)); // send selected text as string
+                nextButton2.classList.add("opacity-40");
+                updateThePunTextForQuote();
+            }
+    
+            removeErrorDisplayForZeroExplainers();
+            updateExplanationContainerNumbers();
+        } else {
+            addHelperForQuote();
         }
 
-        removeErrorDisplayForZeroExplainers();
-        nextButton2.classList.add("opacity-40");
-        updateExplanationContainerNumbers();
+        quoteButton.style.display = "none";
     });
 
     document.addEventListener("mousedown", documentMouseDown);
@@ -120,6 +126,32 @@ function init() {
     enableDarkMode();
 }
 
+function pageGoBackAnimation() {
+
+    const section1 = document.getElementById("section1");
+    const section2 = document.getElementById("section2");
+
+    section2.style.display = "none";
+    section2.classList.remove("fadeOut");
+    section1.classList.add("fadeIn");
+    section1.style.display = "block";
+    scrollToTargetAdjusted('section1');
+    section2.removeEventListener("animationend", pageGoBackAnimation);
+}
+
+function pageGoForwardAnimation() {
+
+    const section1 = document.getElementById("section1");
+    const section2 = document.getElementById("section2");
+
+    section1.style.display = "none";
+    section1.classList.remove("fadeOut");
+    section2.classList.add("fadeIn");
+    section2.style.display = "block";
+    scrollToTargetAdjusted('section2');
+    section1.removeEventListener("animationend", pageGoForwardAnimation);
+}
+
 function documentMouseDown(event) {
     const quoteButton = document.getElementById('quoteButton');
     if (getComputedStyle(quoteButton).display === "block" && event.target.id !== "quoteButton") {
@@ -128,6 +160,7 @@ function documentMouseDown(event) {
         }, 300);
         window.getSelection().empty();
     }
+    removeHelperForQuote();
 }
 
 function moveQuoteButton(event) {
@@ -136,7 +169,7 @@ function moveQuoteButton(event) {
     if (!mobileDeviceDetected) {
         setTimeout(() => {
             if (pun.currentSelectedText.length > 0) {
-                console.log("PC highlighting detected");
+                //console.log("PC highlighting detected");
                 quoteButton.style.display = "block";
                 quoteButton.style.position = "absolute";
                 const x = event.pageX;
@@ -164,14 +197,18 @@ function selectableTextAreaMouseUp(event) {
 
     if (detectedNodeID === "punContentDisplay") {
         //const quoteButton = document.getElementById('quoteButton');
+        //console.log(getSelection);
         const selectedText = getSelection.toString().trim();
         pun.currentSelectedText = selectedText;
         pun.startingRange = getSelection.anchorOffset;
         pun.endingRange = getSelection.focusOffset;
+
+        //console.log(`Selected text of ${selectedText} at range ${pun.startingRange} to ${pun.endingRange}.`);
+
         if (mobileDeviceDetected) {
             setTimeout(() => {
                 if (selectedText.length > 0) {
-                    console.log("touchscreen highlighting detected");
+                    //console.log("touchscreen highlighting detected");
                     quoteButton.style.display = "block";
                     quoteButton.style.position = "static";
                 }
@@ -207,6 +244,24 @@ function removeHelperForPun() {
     punContentDiv.classList.remove('border-2');
 
     const punContentHelper = document.getElementById('punContentHelper');
+    punContentHelper.style.display = "none";
+}
+
+function addHelperForQuote() {
+    const punContentDiv = document.getElementById('punContentDisplayDiv');
+    punContentDiv.classList.add('border-red-700');
+    punContentDiv.classList.add('border-2');
+
+    const punContentHelper = document.getElementById('explanationContentHelperQuoteError');
+    punContentHelper.style.display = "block";
+}
+
+function removeHelperForQuote() {
+    const punContentDiv = document.getElementById('punContentDisplayDiv');
+    punContentDiv.classList.remove('border-red-700');
+    punContentDiv.classList.remove('border-2');
+
+    const punContentHelper = document.getElementById('explanationContentHelperQuoteError');
     punContentHelper.style.display = "none";
 }
 
@@ -253,9 +308,9 @@ function createExplanationContainer(explanationString) {
     punExplanationDiv.append(punDivInner);
 
     const punDivInnerHeader = document.createElement('h3');
-    punDivInnerHeader.classList.add("text-2xl", "text-shadow-md", "mb-4");
-    if (explanationString.length > 0) punDivInnerHeader.innerHTML = `Explanation ${explanationIncrementer} - ${explanationString}`
-    else punDivInnerHeader.innerHTML = `Explanation ${explanationIncrementer}`;
+    punDivInnerHeader.classList.add("text-2xl", "text-shadow-md", "mb-4", "dark:text-yellow-400");
+    if (explanationString.length > 0) punDivInnerHeader.innerHTML = `explanation ${explanationIncrementer} - ${explanationString}`
+    else punDivInnerHeader.innerHTML = `explanation ${explanationIncrementer}`;
     // js accessor class list
     punDivInnerHeader.classList.add("js-stringReplace");
     punDivInner.append(punDivInnerHeader);
@@ -265,23 +320,25 @@ function createExplanationContainer(explanationString) {
     punTextArea.name = "punExplanation";
     punTextArea.cols = "3";
     punTextArea.rows = "3";
-    punTextArea.placeholder = "Write your explanation here!";
+    punTextArea.placeholder = "write your explanation here!";
     // set values required for the JSON
     if (explanationString.length > 0) {
         punTextArea.value = `${explanationString} - `;
+        pun.explanation[`${explanationIncrementer}`].explanationContent = `${explanationString} - `;
         // set details for linking
         pun.explanation[`${explanationIncrementer}`].link = true;
         pun.explanation[`${explanationIncrementer}`].stringStartPosition = pun.startingRange;
         pun.explanation[`${explanationIncrementer}`].stringEndPosition = pun.endingRange;
     } else {
         punTextArea.value = explanationString;
+        pun.explanation[`${explanationIncrementer}`].explanationContent = "";
         // set details to false for linking
         pun.explanation[`${explanationIncrementer}`].link = false;
         pun.explanation[`${explanationIncrementer}`].stringStartPosition = false;
         pun.explanation[`${explanationIncrementer}`].stringEndPosition = false;
     }
     pun.explanation[`${explanationIncrementer}`].id = `${explanationIncrementer}`;
-    pun.explanation[`${explanationIncrementer}`].explanationContent = "";
+    
     punTextArea.id = `punExplanationTextarea-${explanationIncrementer}`;
     punDivInner.append(punTextArea);
     
@@ -334,11 +391,11 @@ function createExplanationContainer(explanationString) {
     buttonClose.addEventListener('click', () => {
         
         // delete object data
-        console.log("Delete the following object:");
-        console.log(pun.explanation[`${punExplanationDiv.dataset.idNumber}`]);
+        //console.log("Delete the following object:");
+        //console.log(pun.explanation[`${punExplanationDiv.dataset.idNumber}`]);
         delete pun.explanation[`${punExplanationDiv.dataset.idNumber}`];
-        console.log("Should be deleted now - is it still here?");
-        console.log(pun.explanation[`${punExplanationDiv.dataset.idNumber}`]);
+        //console.log("Should be deleted now - is it still here?");
+        //console.log(pun.explanation[`${punExplanationDiv.dataset.idNumber}`]);
 
         //modify next page button to disabled if all explanation containers removed
         if (Object.keys(pun.explanation).length === 0) {
@@ -348,6 +405,7 @@ function createExplanationContainer(explanationString) {
         punExplanationDiv.remove();
 
         updateExplanationContainerNumbers();
+        updateThePunTextForQuote();
     });
 
     scrollToTargetAdjusted(punExplanationDiv.id);
@@ -411,7 +469,7 @@ function checkExplanationsCompleted() {
 
         if (explanationContainersMoreThanZero) {
             // scroll to top most error
-            console.log(`scrollToIndex is ${scrollToIndex}`);
+            //console.log(`scrollToIndex is ${scrollToIndex}`);
             scrollToTargetAdjusted(`punExplanationTextarea-${scrollToIndex}`);
         } else {
             // enable the error for no explanations
@@ -471,7 +529,7 @@ function updateExplanationContainerNumbers() {
         const regex = new RegExp(/\d+/gm);
         let increment = 1;
         
-        const arrayOfElements = document.getElementsByClassName('js-stringReplace')
+        const arrayOfElements = document.getElementsByClassName('js-stringReplace');
         
         Array.prototype.forEach.call(arrayOfElements, function(element) {
             element.innerHTML = element.innerHTML.toString().replace(regex, increment);
@@ -480,4 +538,85 @@ function updateExplanationContainerNumbers() {
     
     }
 
+}
+
+function updateThePunTextForQuote() {
+    
+    const initialString = pun.content;
+    const spanFirstPart = `<span class="text-white dark:text-yellow-400 font-bold">`;
+    const spanSecondPart = `</span>`;
+    const spanFirstLength = spanFirstPart.length;
+    const spanBothLength = spanFirstPart.length + spanSecondPart.length;
+
+    // create an array of 2d arrays representing the values that should be changed
+
+    let array = [];
+
+    for (const object in pun.explanation) {
+        if (pun.explanation[object].link === true) {
+            const arrayToAdd = [pun.explanation[object].stringStartPosition, pun.explanation[object].stringEndPosition];
+            array.push(arrayToAdd);
+        } 
+    }
+
+    console.log("Array of the following coordinates generated.");
+    console.log(array);
+
+    // sort these by smallest range first
+
+    array.sort(function(a, b) {
+        return a[0] - b[0];
+    });
+
+    console.log("Sorted array into the following.");
+    console.log(array);
+
+    // add the styling in a for loop and + onto the values in the array for each iteration
+
+    pun.styledContent = initialString;
+    for (let i = 0; i < array.length; i++) {
+
+        
+        console.log(`Iteration ${i}`);
+        console.log(pun.styledContent.slice(0, (array[i][0] + (spanBothLength * i))));
+        console.log(0, (array[i][0] + (spanBothLength * i)));
+        console.log(spanFirstPart);
+        console.log(pun.styledContent.slice((array[i][0] + (spanBothLength * i)), (array[i][1] + (spanBothLength * i))));
+        console.log((array[i][0] + (spanBothLength * i) + spanFirstLength));
+        console.log(spanSecondPart);
+        console.log(pun.styledContent.slice((array[i][1] + (spanBothLength * i))));
+        
+        pun.styledContent = [pun.styledContent.slice(0, (array[i][0] + (spanBothLength * i))), spanFirstPart, pun.styledContent.slice((array[i][0] + (spanBothLength * i)), (array[i][1] + (spanBothLength * i))), spanSecondPart, pun.styledContent.slice((array[i][1] + (spanBothLength * i)))].join('').toString();
+    }
+
+    console.log("Generated the following formatted styled content.");
+    console.log(pun.styledContent);
+
+    // set the preview element to the styled HTML
+    document.getElementById('previewContentDisplay').innerHTML = pun.styledContent;
+}
+
+function checkIfQuotedBefore() {
+    let notQuotedBefore = true;
+
+    // if nothing has been quoted - then allow text to be quoted
+    if (Object.keys(pun.explanation).length === 0) return notQuotedBefore;
+
+    // if explanations exist, check if they are links and check the ranges
+    const highlightStart = pun.startingRange;
+    const highlightFinish = pun.endingRange;
+
+    for (const object in pun.explanation) {
+        if (pun.explanation[object].link === true) {
+            // start is within quoted text
+            if (highlightStart >= pun.explanation[object].stringStartPosition && highlightStart <= pun.explanation[object].stringEndPosition) notQuotedBefore = false;
+            // end is within the quoted text
+            if (highlightFinish >= pun.explanation[object].stringStartPosition && highlightFinish <= pun.explanation[object].stringEndPosition) notQuotedBefore = false;
+            // quote text is within the highlight
+            if (pun.explanation[object].stringStartPosition >= highlightStart && pun.explanation[object].stringStartPosition <= highlightFinish) notQuotedBefore = false;
+            if (pun.explanation[object].stringEndPosition >= highlightStart && pun.explanation[object].stringEndPosition <= highlightFinish) notQuotedBefore = false;
+        } 
+    }
+
+    return notQuotedBefore;
 }
