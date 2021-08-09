@@ -17,6 +17,11 @@ const mobileDeviceDetected = isMobile();
 
 function init() {
 
+    // confetti
+    var confettiElement = document.getElementById('my-canvas');
+    var confettiSettings = {"target":confettiElement,"max":"200","size":"1","animate":true,"props":["circle","square","triangle","line"],"colors":[[165,104,246],[230,61,135],[0,199,228],[253,214,126]],"clock":"40","rotate":true,"respawn":true};
+    var confetti = new ConfettiGenerator(confettiSettings);
+    
     const punTextarea = document.getElementById('punContent');
     const punTextareaDisplay = document.getElementById('punContentDisplay');
     const explanationInsertContainer = document.getElementById("punExplanationInsertContainer");
@@ -81,6 +86,7 @@ function init() {
 
     const nextButton2 = document.getElementById('nextButton2');
     const quoteButton = document.getElementById('quoteButton');
+    const addExplanationButton = document.getElementById("addExplanationButton");
 
     quoteButton.addEventListener('click', () => {
 
@@ -102,11 +108,10 @@ function init() {
         }
 
         quoteButton.style.display = "none";
+        addExplanationButton.style.display = "block";
     });
 
     document.addEventListener("mousedown", documentMouseDown);
-
-    const addExplanationButton = document.getElementById("addExplanationButton");
 
     addExplanationButton.addEventListener('click', () => {
         explanationIncrementer += 1;
@@ -120,6 +125,7 @@ function init() {
         checkExplanationsCompleted();
         if (nextPageButton2Enabled === true) {
             // hide current page
+            confetti.render();
             section2.classList.remove("fadeIn");
             section2.classList.add("fadeOut");
             section2.addEventListener("animationend", pageFinishAnimation);
@@ -173,6 +179,7 @@ function documentMouseDown(event) {
     if (getComputedStyle(quoteButton).display === "block" && event.target.id !== "quoteButton") {
         setTimeout(() => {
             quoteButton.style.display = "none";
+            addExplanationButton.style.display = "block";
         }, 300);
         window.getSelection().empty();
     }
@@ -225,6 +232,7 @@ function selectableTextAreaMouseUp(event) {
             setTimeout(() => {
                 if (selectedText.length > 0) {
                     //console.log("touchscreen highlighting detected");
+                    addExplanationButton.style.display = "none";
                     quoteButton.style.display = "block";
                     quoteButton.style.position = "static";
                 }
