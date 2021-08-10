@@ -260,6 +260,13 @@ Correct the cursor style of increment and decrement buttons in Safari.
 2. Correct the outline style in Safari.
 */
 
+[type='search'] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
+}
+
 /**
 Remove the inner padding in Chrome and Safari on macOS.
 */
@@ -640,6 +647,15 @@ video {
 .mx-auto{
   margin-left: auto;
   margin-right: auto;
+}
+
+.my-16{
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.mt-4{
+  margin-top: 1rem;
 }
 
 .mt-5{
@@ -1059,6 +1075,11 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .py-5{
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
@@ -1071,6 +1092,10 @@ video {
 
 .pr-2{
   padding-right: 0.5rem;
+}
+
+.pb-5{
+  padding-bottom: 1.25rem;
 }
 
 .text-center{
@@ -1287,7 +1312,88 @@ input:checked ~ .dot {
           animation-name: fadeIn;
 }
 
+@-webkit-keyframes numberTextGoDown {
+  0% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+
+  100% {
+    opacity: 0%;
+    transform: translateY(25px);
+  }
+}
+
+@keyframes numberTextGoDown {
+  0% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+
+  100% {
+    opacity: 0%;
+    transform: translateY(25px);
+  }
+}
+
+.numberTextGoDown {
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-name: numberTextGoDown;
+          animation-name: numberTextGoDown;
+}
+
+.numberTextGoDownReverse {
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-name: numberTextGoDown;
+          animation-name: numberTextGoDown;
+  animation-direction: reverse;
+}
+
+@-webkit-keyframes numberTextGoUp {
+  0% {
+    opacity: 0%;
+    transform: translateY(-25px);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+}
+
+@keyframes numberTextGoUp {
+  0% {
+    opacity: 0%;
+    transform: translateY(-25px);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+}
+
+.numberTextGoUp {
+  -webkit-animation-duration: 0.6s;
+          animation-duration: 0.6s;
+  -webkit-animation-name: numberTextGoUp;
+          animation-name: numberTextGoUp;
+}
+
+.numberTextGoUpReverse {
+  -webkit-animation-duration: 0.6s;
+          animation-duration: 0.6s;
+  -webkit-animation-name: numberTextGoUp;
+          animation-name: numberTextGoUp;
+  animation-direction: reverse;
+}
+
 @media (min-width: 640px){
+  .sm\:justify-between{
+    justify-content: space-between;
+  }
 }
 
 @media (min-width: 768px){
@@ -1318,6 +1424,10 @@ input:checked ~ .dot {
 
   .md\:items-start{
     align-items: flex-start;
+  }
+
+  .md\:justify-end{
+    justify-content: flex-end;
   }
 
   .md\:justify-between{
@@ -1373,6 +1483,10 @@ input:checked ~ .dot {
     width: 8rem;
   }
 
+  .lg\:justify-end{
+    justify-content: flex-end;
+  }
+
   .lg\:p-10{
     padding: 2.5rem;
   }
@@ -1380,6 +1494,10 @@ input:checked ~ .dot {
   .lg\:px-20{
     padding-left: 5rem;
     padding-right: 5rem;
+  }
+
+  .lg\:pr-5{
+    padding-right: 1.25rem;
   }
 }
 

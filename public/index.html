@@ -26,8 +26,11 @@
     <meta property="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Emojione_1F602.svg/1200px-Emojione_1F602.svg.png">
 
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/vaakash/socializer@2f749eb/css/socializer.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="./main.js"></script>
+    <script defer src="./main.js"></script>
+    <script defer src="./socializer.js"></script>
 
 </head>
 
@@ -90,8 +93,12 @@
         <div x-data="{selected:null}">
         
             <main class="px-2 py-2 mt-5 md:px-10">
-                <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm shadow-2xl">
-                    <p class="text-4xl text-shadow-md">Why did <span class="text-white dark:text-yellow-400 font-bold"><a id="explanation-0-link" class="cursor-pointer" @click="selected = 1;">Adele</a></span> cross the road? </br></br> To say <span class="text-white dark:text-yellow-400 font-bold"><a id="explanation-1-link" class="cursor-pointer" @click="selected = 1;">hello from the other side</a></span>.</p>
+                <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 pb-5 rounded-sm shadow-2xl divide-y-2 divide-black dark:divide-yellow-400">
+                    <p class="text-4xl text-shadow-md my-16">Why did <span class="text-white dark:text-yellow-400 font-bold"><a id="explanation-0-link" class="cursor-pointer" @click="selected = 1;">Adele</a></span> cross the road? </br></br> To say <span class="text-white dark:text-yellow-400 font-bold"><a id="explanation-1-link" class="cursor-pointer" @click="selected = 1;">hello from the other side</a></span>.</p>
+                    <div class="flex sm:justify-between md:justify-end lg:justify-end mt-4 py-4">
+                        <p class="text-xl md:text-2xl lg:pr-5 italic font-thin dark:text-yellow-400">share me: &nbsp&nbsp</p>
+                        <div class="socializer" data-features="32px,opacity,bdr-md,bg-none,pad" data-sites="facebook,twitter,reddit,instagram,line"></div>
+                    </div>
                 </div>
             </main>
 
@@ -138,6 +145,11 @@
                             <button id="reviewButtonBad" class="text-shadow-lg transform transition duration-500 hover:scale-125" aria-label="bad review">
                                 <span>😑</span>
                             </button>
+                        </div>
+                        <div class="flex justify-between mt-8 text-3xl overflow-hidden z-10">
+                            <span id="reviewButtonGood-value">10</span>
+                            <span id="reviewButtonOk-value">2</span>
+                            <span id="reviewButtonBad-value">4</span>
                         </div>
                     </div>
                 </section>

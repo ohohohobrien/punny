@@ -6,6 +6,10 @@ function init() {
     const reviewButtonOk = document.getElementById('reviewButtonOk');
     const reviewButtonBad = document.getElementById('reviewButtonBad');
 
+    const reviewButtonGoodValue = document.getElementById('reviewButtonGood-value');
+    const reviewButtonOkValue = document.getElementById('reviewButtonOk-value');
+    const reviewButtonBadValue = document.getElementById('reviewButtonBad-value');
+
     const darkToggle = document.getElementById('toggleB');
     darkToggle.addEventListener('input', () => {
         if (darkToggle.checked === true) {
@@ -33,13 +37,36 @@ function init() {
     reviewButtonGood.addEventListener('click', () => {stopAnimateClass(reviewButtonGood)});
     reviewButtonOk.addEventListener('click', () => {stopAnimateClass(reviewButtonOk)});
     reviewButtonBad.addEventListener('click', () => {stopAnimateClass(reviewButtonBad)});
+    
+    reviewButtonGoodValue.addEventListener('animationend', (e) => {
+        handleAnimationStateNumberChange(e.target);
+    });
+
+    reviewButtonOkValue.addEventListener('animationend', (e) => {
+        handleAnimationStateNumberChange(e.target);
+    });
+
+    reviewButtonBadValue.addEventListener('animationend', (e) => {
+        handleAnimationStateNumberChange(e.target);
+    });
+    
     loadListenersForExplanationText();
+
 }
 
 function stopAnimateClass(button) {
     const reviewButtonGood = document.getElementById('reviewButtonGood');
     const reviewButtonOk = document.getElementById('reviewButtonOk');
     const reviewButtonBad = document.getElementById('reviewButtonBad');
+    const reviewButtonGoodValue = document.getElementById('reviewButtonGood-value');
+    const reviewButtonOkValue = document.getElementById('reviewButtonOk-value');
+    const reviewButtonBadValue = document.getElementById('reviewButtonBad-value');
+
+    const valueToUpdate = document.getElementById(`${button.id}-value`);
+    const alreadyAnimating = button.classList.contains("animate-spin");
+
+    // remove number if animating - GOOD BUTTON
+    //if (reviewButtonGood.classList.contains('animate-spin')) reviewButtonGoodValue.innerHTML = (parseInt(reviewButtonGoodValue.innerHTML.toString()) - 1).toString();
 
     reviewButtonGood.classList.remove('animate-spin'); 
     reviewButtonGood.classList.add('hover:scale-125');  
@@ -48,12 +75,22 @@ function stopAnimateClass(button) {
     reviewButtonGood.classList.add('duration-500');
     reviewButtonGood.classList.add('text-shadow-lg');
 
+    if (reviewButtonGoodValue.dataset.animationState === "3") reviewButtonGoodValue.classList.add('numberTextGoUpReverse');
+
+    // remove number if animating
+    //if (reviewButtonOk.classList.contains('animate-spin')) reviewButtonOkValue.innerHTML = (parseInt(reviewButtonOkValue.innerHTML.toString()) - 1).toString();
+
     reviewButtonOk.classList.remove('animate-spin');
     reviewButtonOk.classList.add('hover:scale-125');
     reviewButtonOk.classList.add('transform');
     reviewButtonOk.classList.add('transition');
     reviewButtonOk.classList.add('duration-500');
     reviewButtonOk.classList.add('text-shadow-lg');
+
+    if (reviewButtonOkValue.dataset.animationState === "3") reviewButtonOkValue.classList.add('numberTextGoUpReverse');
+
+    // remove number if animating
+    //if (reviewButtonBad.classList.contains('animate-spin')) reviewButtonBadValue.innerHTML = (parseInt(reviewButtonBadValue.innerHTML.toString()) - 1).toString();
 
     reviewButtonBad.classList.remove('animate-spin');
     reviewButtonBad.classList.add('hover:scale-125');
@@ -62,12 +99,81 @@ function stopAnimateClass(button) {
     reviewButtonBad.classList.add('duration-500');
     reviewButtonBad.classList.add('text-shadow-lg');
 
-    button.classList.remove('hover:scale-125'); 
-    button.classList.remove('transform');
-    button.classList.remove('transition');
-    button.classList.remove('duration-500');
-    button.classList.remove('text-shadow-lg');
-    button.classList.add('animate-spin');
+    if (reviewButtonBadValue.dataset.animationState === "3") reviewButtonBadValue.classList.add('numberTextGoUpReverse');
+
+    if (alreadyAnimating) {
+        //console.log("does contain - stop animation");
+        button.classList.remove('animate-spin'); 
+        button.classList.add('hover:scale-125');  
+        button.classList.add('transform');
+        button.classList.add('transition');
+        button.classList.add('duration-500');
+        button.classList.add('text-shadow-lg');
+
+        
+        
+    } else {
+        //console.log("does not contain");
+        button.classList.remove('hover:scale-125'); 
+        button.classList.remove('transform');
+        button.classList.remove('transition');
+        button.classList.remove('duration-500');
+        button.classList.remove('text-shadow-lg');
+        button.classList.add('animate-spin');
+
+        // animate the number increase
+
+        valueToUpdate.dataset.animationState = "1";
+        valueToUpdate.classList.add('numberTextGoDown');
+        //console.log("commence animation");
+    }
+
+    
+    if (reviewButtonGoodValue.dataset.animationState === "3") reviewButtonGoodValue.classList.add('numberTextGoUpReverse');
+    if (reviewButtonOkValue.dataset.animationState === "3") reviewButtonOkValue.classList.add('numberTextGoUpReverse');
+    if (reviewButtonBadValue.dataset.animationState === "3") reviewButtonBadValue.classList.add('numberTextGoUpReverse');
+}
+
+function handleAnimationStateNumberChange(element) {
+
+    const animationState = element.dataset.animationState;
+
+    if (animationState === "4") {
+        //if (element.classList.contains('numberTextGoUp')) {
+            element.classList.remove('numberTextGoDownReverse');
+            //console.log("animationState4 finished");
+            delete element.dataset.animationState;
+        //}
+    }
+
+    if (animationState === "3") {
+        element.innerHTML = (parseInt(element.innerHTML.toString()) - 1).toString();
+        element.classList.add('numberTextGoDownReverse');
+        element.dataset.animationState = "4";
+        element.classList.remove('numberTextGoUpReverse');
+        //console.log("animationState3 finished");
+    }
+
+    if (animationState === "2") {
+        //if (element.classList.contains('numberTextGoUp')) {
+            element.classList.remove('numberTextGoUp');
+            //console.log("animationState2 finished");
+            element.dataset.animationState = "3";
+            //delete element.dataset.animationState;
+        //}
+    }
+
+    if (animationState === "1") {
+        //if (element.classList.contains('numberTextGoDown')) {
+            element.innerHTML = (parseInt(element.innerHTML.toString()) + 1).toString();
+            element.classList.add('numberTextGoUp');
+            element.dataset.animationState = "2";
+            element.classList.remove('numberTextGoDown');
+            //console.log("animationState1 finished");
+        //}
+    }
+
+    //console.log("one animation ended");
 }
 
 // not finalised
