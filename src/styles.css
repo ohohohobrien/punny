@@ -60,3 +60,49 @@ input:checked ~ .dot {
   animation-duration: 0.3s;
   animation-name: fadeIn;
 }
+
+@keyframes numberTextGoDown {
+  0% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+
+  100% {
+    opacity: 0%;
+    transform: translateY(25px);
+  }
+}
+
+.numberTextGoDown {
+  animation-duration: 0.3s;
+  animation-name: numberTextGoDown;
+}
+
+.numberTextGoDownReverse {
+  animation-duration: 0.3s;
+  animation-name: numberTextGoDown;
+  animation-direction: reverse;
+}
+
+@keyframes numberTextGoUp {
+  0% {
+    opacity: 0%;
+    transform: translateY(-25px);
+  }
+
+  100% {
+    opacity: 100%;
+    transform: translateY(0px);
+  }
+}
+
+.numberTextGoUp {
+  animation-duration: 0.6s;
+  animation-name: numberTextGoUp;
+}
+
+.numberTextGoUpReverse {
+  animation-duration: 0.6s;
+  animation-name: numberTextGoUp;
+  animation-direction: reverse;
+}

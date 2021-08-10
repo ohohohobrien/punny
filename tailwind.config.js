@@ -1,8 +1,5 @@
 module.exports = {
-    purge: {
-      enabled: true,
-      content: ['./public/*.html', './public/*.js'],
-    },
+    purge: [],
     /*
 
     REPLACE PURGE [] WITH THE BELOW WHEN BUILDING FOR PRODUCTION
