@@ -158,7 +158,7 @@ function handleAnimationStateNumberChange(element) {
         element.dataset.animationState = "4";
         element.classList.remove('numberTextGoUpReverse');
         //console.log("animationState3 finished");
-        element.classList.remove("text-blue-400", "font-bold");
+        element.classList.remove("text-blue-400", "font-bold", "dark:text-yellow-400");
     }
 
     if (animationState === "2") {
@@ -177,7 +177,7 @@ function handleAnimationStateNumberChange(element) {
             element.dataset.animationState = "2";
             element.classList.remove('numberTextGoDown');
             //console.log("animationState1 finished");
-            element.classList.add("text-blue-400", "font-bold");
+            element.classList.add("text-blue-400", "font-bold", "dark:text-yellow-400");
             window.localStorage.setItem(urlOfPage, element.id);
         //}
     }
@@ -189,7 +189,7 @@ function setInitialNumberStyle() {
     const buttonId = window.localStorage.getItem(urlOfPage);
     if (buttonId) {
         const buttonNumber = document.getElementById(buttonId);
-        buttonNumber.classList.add("text-blue-400", "font-bold");
+        buttonNumber.classList.add("text-blue-400", "font-bold", "dark:text-yellow-400");
         buttonNumber.dataset.animationState = "3";
         const buttonString = buttonId.split("-");
         const buttonElement = document.getElementById(buttonString[0]);
