@@ -694,6 +694,10 @@ video {
   margin-left: 0.25rem;
 }
 
+.ml-10{
+  margin-left: 2.5rem;
+}
+
 .block{
   display: block;
 }
@@ -859,6 +863,10 @@ video {
 
 .items-center{
   align-items: center;
+}
+
+.justify-start{
+  justify-content: flex-start;
 }
 
 .justify-end{
@@ -1052,6 +1060,10 @@ video {
   padding: 0.25rem;
 }
 
+.p-2{
+  padding: 0.5rem;
+}
+
 .p-4{
   padding: 1rem;
 }
@@ -1109,6 +1121,11 @@ video {
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-xl{
@@ -1185,6 +1202,10 @@ video {
 .dark .dark\:text-yellow-400{
   --tw-text-opacity: 1;
   color: rgba(251, 191, 36, var(--tw-text-opacity));
+}
+
+.underline{
+  text-decoration: underline;
 }
 
 .hover\:underline:hover{
@@ -1396,9 +1417,6 @@ input:checked ~ .dot {
 }
 
 @media (min-width: 640px){
-  .sm\:justify-between{
-    justify-content: space-between;
-  }
 }
 
 @media (min-width: 768px){
@@ -1429,10 +1447,6 @@ input:checked ~ .dot {
 
   .md\:items-start{
     align-items: flex-start;
-  }
-
-  .md\:justify-end{
-    justify-content: flex-end;
   }
 
   .md\:justify-between{
@@ -1486,10 +1500,6 @@ input:checked ~ .dot {
 
   .lg\:w-32{
     width: 8rem;
-  }
-
-  .lg\:justify-end{
-    justify-content: flex-end;
   }
 
   .lg\:p-10{
