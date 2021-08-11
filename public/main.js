@@ -1,5 +1,7 @@
 window.onload = init;
 
+const urlOfPage = window.location.href;
+
 function init() {
 
     const reviewButtonGood = document.getElementById('reviewButtonGood');
@@ -52,6 +54,7 @@ function init() {
     
     loadListenersForExplanationText();
 
+    setInitialNumberStyle();
 }
 
 function stopAnimateClass(button) {
@@ -143,6 +146,9 @@ function handleAnimationStateNumberChange(element) {
             element.classList.remove('numberTextGoDownReverse');
             //console.log("animationState4 finished");
             delete element.dataset.animationState;
+            if (window.localStorage.getItem(urlOfPage) === element.id) {
+                window.localStorage.removeItem(urlOfPage);
+            }
         //}
     }
 
@@ -152,6 +158,7 @@ function handleAnimationStateNumberChange(element) {
         element.dataset.animationState = "4";
         element.classList.remove('numberTextGoUpReverse');
         //console.log("animationState3 finished");
+        element.classList.remove("text-blue-400", "font-bold");
     }
 
     if (animationState === "2") {
@@ -170,10 +177,29 @@ function handleAnimationStateNumberChange(element) {
             element.dataset.animationState = "2";
             element.classList.remove('numberTextGoDown');
             //console.log("animationState1 finished");
+            element.classList.add("text-blue-400", "font-bold");
+            window.localStorage.setItem(urlOfPage, element.id);
         //}
     }
 
     //console.log("one animation ended");
+}
+
+function setInitialNumberStyle() {
+    const buttonId = window.localStorage.getItem(urlOfPage);
+    if (buttonId) {
+        const buttonNumber = document.getElementById(buttonId);
+        buttonNumber.classList.add("text-blue-400", "font-bold");
+        buttonNumber.dataset.animationState = "3";
+        const buttonString = buttonId.split("-");
+        const buttonElement = document.getElementById(buttonString[0]);
+        buttonElement.classList.remove('hover:scale-125'); 
+        buttonElement.classList.remove('transform');
+        buttonElement.classList.remove('transition');
+        buttonElement.classList.remove('duration-500');
+        buttonElement.classList.remove('text-shadow-lg');
+        buttonElement.classList.add('animate-spin');
+    }
 }
 
 // not finalised

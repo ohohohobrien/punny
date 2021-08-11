@@ -25,16 +25,16 @@
     <meta property="twitter:description" content="Find, share and understand puns, idioms and expressions!">
     <meta property="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Emojione_1F602.svg/1200px-Emojione_1F602.svg.png">
 
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/vaakash/socializer@2f749eb/css/socializer.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <link rel="stylesheet" href="styles.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script defer src="./main.js"></script>
     <script defer src="./socializer.js"></script>
 
 </head>
 
-<body class="text-gray-800 dark:text-white font-roboto bg-contain bg-gradient-to-br to-purple-200 from-blue-400 dark:to-blue-800 dark:from-blue-900">
+<body class="text-gray-800 dark:text-white font-roboto bg-contain bg-gradient-to-br to-purple-400 from-blue-400 dark:to-blue-800 dark:from-blue-900">
 
     <div><!-- content wrapper -->
         <div class="fixed w-full z-10 top-0 dark:text-yellow-400" x-data="{selected:null}"> 
@@ -97,7 +97,7 @@
                     <p class="text-4xl text-shadow-md my-16">Why did <span class="text-white dark:text-yellow-400 font-bold"><a id="explanation-0-link" class="cursor-pointer" @click="selected = 1;">Adele</a></span> cross the road? </br></br> To say <span class="text-white dark:text-yellow-400 font-bold"><a id="explanation-1-link" class="cursor-pointer" @click="selected = 1;">hello from the other side</a></span>.</p>
                     <div class="flex sm:justify-between md:justify-end lg:justify-end mt-4 py-4">
                         <p class="text-xl md:text-2xl lg:pr-5 italic font-thin dark:text-yellow-400">share me: &nbsp&nbsp</p>
-                        <div class="socializer" data-features="32px,opacity,bdr-md,bg-none,pad" data-sites="facebook,twitter,reddit,instagram,line"></div>
+                        <div class="socializer" data-features="32px,opacity,bdr-md,bg-none,pad" data-sites="facebook,twitter,reddit,line"></div> 
                     </div>
                 </div>
             </main>
@@ -147,7 +147,7 @@
                             </button>
                         </div>
                         <div class="flex justify-between mt-8 text-3xl overflow-hidden z-10">
-                            <span id="reviewButtonGood-value">10</span>
+                            <span id="reviewButtonGood-value"">10</span>
                             <span id="reviewButtonOk-value">2</span>
                             <span id="reviewButtonBad-value">4</span>
                         </div>

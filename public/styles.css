@@ -1036,8 +1036,8 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(30, 58, 138, 0));
 }
 
-.to-purple-200{
-  --tw-gradient-to: #ddd6fe;
+.to-purple-400{
+  --tw-gradient-to: #a78bfa;
 }
 
 .dark .dark\:to-blue-800{
@@ -1160,6 +1160,11 @@ video {
 .text-red-700{
   --tw-text-opacity: 1;
   color: rgba(185, 28, 28, var(--tw-text-opacity));
+}
+
+.text-blue-400{
+  --tw-text-opacity: 1;
+  color: rgba(96, 165, 250, var(--tw-text-opacity));
 }
 
 .dark .dark\:text-black{
