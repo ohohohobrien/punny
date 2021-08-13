@@ -25,12 +25,14 @@
     <meta property="twitter:description" content="Find, share and understand puns, idioms and expressions!">
     <meta property="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Emojione_1F602.svg/1200px-Emojione_1F602.svg.png">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/vaakash/socializer@2f749eb/css/socializer.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
     <link rel="stylesheet" href="styles.css">
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script defer src="./index.min.js"></script>
     <script defer src="./create.js"></script>
-
+    <script defer src="./socializer.js"></script>
 
 </head>
 
@@ -101,7 +103,8 @@
                 <main class="px-2 py-2 mt-5 md:px-10 lg:px-20">
                     <div id="punContentDiv" class="bg-yellow-300 dark:bg-gray-800 px-5 py-10 rounded-sm shadow-2xl">
                         <textarea id="punContent" class="text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm resize-y bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="punContent" id="" cols="5" rows="5" placeholder="write your pun here!"></textarea>
-                        <span style="display: none;" class="text-xs font-bold text-red-700" id="punContentHelper">Please enter a pun with more than 3 characters.</span>
+                        <span style="display: none;" class="text-xs font-bold text-red-700" id="punContentHelper">please enter a pun with more than 3 characters.</span>
+                        <span style="display: none;" class="text-xs font-bold text-red-700" id="punContentHelperSpecialCharacter">please don't use the characters "<" or ">" in your pun.</span>
                     </div>
                 </main>
     
@@ -137,8 +140,8 @@
                         <div class="">
                             <p id="punContentDisplay" class="whitespace-pre-line text-3xl text-shadow-md w-full min-h-0 p-5 rounded-sm bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500"></p>
                         </div>
-                        <span style="display: none;" class="text-xs font-bold text-red-700" id="explanationContentHelper">Please make at least 1 explanation for this pun.</span>
-                        <span style="display: none;" class="text-xs font-bold text-red-700" id="explanationContentHelperQuoteError">You already quoted this part for an explanation. Check out the preview below to see what you've highlighted.</span>
+                        <span style="display: none;" class="text-xs font-bold text-red-700" id="explanationContentHelper">please make at least 1 explanation for this pun.</span>
+                        <span style="display: none;" class="text-xs font-bold text-red-700" id="explanationContentHelperQuoteError">you already quoted this part for an explanation. check out the preview below to see what you've highlighted.</span>
                     </div>
                     <div class="flex justify-end">
                         <button id="quoteButton" style="z-index: 20; display: none;" class="text-white bg-blue-400 hover:bg-blue-500 dark:bg-yellow-400 dark:text-black dark:hover:bg-yellow-500 rounded-sm shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="add quote of selected text">
@@ -182,16 +185,19 @@
                     <p class="text-center text-3xl text-shadow-md p-4">🙌 your pun has been made! 🎉</p>
                     <ul class="text-center space-y-8 p-4 md:p-10 lg:p-10 md:mx-4 lg:mx-8">
                         <li>
-                            <a class="text-xl md:text-2xl text-shadow-md cursor-pointer hover:underline">find it here</a>
+                            <a class="text-xl md:text-2xl text-shadow-md cursor-pointer underline">find it here</a>
                         </li>
                         <li>
-                            <a class="text-xl md:text-2xl text-shadow-md cursor-pointer hover:underline">share it</a>
+                            <span class="text-xl md:text-2xl text-shadow-md">👇 share it 👇</span>
                         </li>
                         <li>
-                            <a class="text-xl md:text-2xl text-shadow-md cursor-pointer hover:underline">create another</a>
+                            <div class="socializer" data-features="32px,opacity,bdr-md,bg-none,pad" data-sites="facebook,twitter,reddit,line"></div> 
                         </li>
                         <li>
-                            <a class="text-xl md:text-2xl text-shadow-md cursor-pointer hover:underline">return home</a>
+                            <a class="text-xl md:text-2xl text-shadow-md cursor-pointer underline">create another</a>
+                        </li>
+                        <li>
+                            <a class="text-xl md:text-2xl text-shadow-md cursor-pointer underline">return home</a>
                         </li>
                     </ul>
                 </div>

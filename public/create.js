@@ -23,20 +23,38 @@ function init() {
     var confetti = new ConfettiGenerator(confettiSettings);
     
     const punTextarea = document.getElementById('punContent');
+    const punContentDiv = document.getElementById('punContentDiv');
     const punTextareaDisplay = document.getElementById('punContentDisplay');
     const explanationInsertContainer = document.getElementById("punExplanationInsertContainer");
+    const punTextareaSpecialCharacterError = document.getElementById("punContentHelperSpecialCharacter");
 
     punTextarea.addEventListener('input', () => {
+
         pun.content = punTextarea.value;
         pun.styledContent = pun.content;
         punTextareaDisplay.innerHTML = pun.content;
 
-        if (pun.content.length > 3) {
-            enableNextButton();
-            removeHelperForPun();
+        const regex = new RegExp(/<|>/gm);
+
+        if (regex.test(pun.content)) {
+            punTextareaSpecialCharacterError.style.display = "block";
+            punContentDiv.classList.add('border-red-700');
+            punContentDiv.classList.add('border-2');
+            nextPageButtonEnabled = false;
         } else {
-            disableNextButton();
+            if (punTextareaSpecialCharacterError.style.display === "block") {
+                punTextareaSpecialCharacterError.style.display = "none";
+                punContentDiv.classList.remove('border-red-700');
+                punContentDiv.classList.remove('border-2');
+            }
+            if (pun.content.length > 3) {
+                enableNextButton();
+                removeHelperForPun();
+            } else {
+                disableNextButton();
+            }
         }
+
     })
 
     document.addEventListener('selectionchange', selectableTextAreaMouseUp);
@@ -371,18 +389,43 @@ function createExplanationContainer(explanationString) {
     explanationHelperText.classList.add("text-xs", "font-bold", "text-red-700")
     explanationHelperText.style.display = "none";
     explanationHelperText.id = `punExplanationHelper-${explanationIncrementer}`;
-    explanationHelperText.innerHTML = "Please enter an explanation with more than 10 characters.";
+    explanationHelperText.innerHTML = "please enter an explanation with more than 10 characters.";
     punDivInner.append(explanationHelperText);
+
+    // error text special character
+    const explanationHelperSpecialCharacterError = document.createElement('span');
+    explanationHelperSpecialCharacterError.classList.add("text-xs", "font-bold", "text-red-700")
+    explanationHelperSpecialCharacterError.style.display = "none";
+    explanationHelperSpecialCharacterError.id = `punExplanationHelperSpecialCharacterError-${explanationIncrementer}`;
+    explanationHelperSpecialCharacterError.innerHTML = `please don't use the characters "<" or ">" in your explanation.`;
+    punDivInner.append(explanationHelperSpecialCharacterError);
 
     // attach listener to text area
     punTextArea.addEventListener("input", () => {
         pun.explanation[`${punExplanationDiv.dataset.idNumber}`].explanationContent = punTextArea.value;
         enableNextButton2();
+
         if (punTextArea.value.length > 10) {
             explanationHelperText.style.display = "none";
             punDivInner.classList.remove('border-red-700');
             punDivInner.classList.remove('border-2');
         }
+
+        const regex = new RegExp(/<|>/gm);
+
+        if (regex.test(punTextArea.value)) {
+            //console.log("should show error now")
+            explanationHelperSpecialCharacterError.style.display = "block";
+            punDivInner.classList.add('border-red-700');
+            punDivInner.classList.add('border-2');
+        } else {
+            if (explanationHelperSpecialCharacterError.style.display === "block") {
+                explanationHelperSpecialCharacterError.style.display = "none";
+                punDivInner.classList.remove('border-red-700');
+                punDivInner.classList.remove('border-2');
+            }
+        }
+        
     });
 
     // button container
@@ -445,12 +488,17 @@ function enableNextButton2() {
 
     const nextButton = document.getElementById('nextButton2');
     let nextButton2Enabled = true;
+    const regex = new RegExp(/<|>/gm);
 
     for (const object in pun.explanation) {
         if (pun.explanation[object].explanationContent.length < 10) {
             nextButton2Enabled = false;
         }
-    }
+        if (regex.test(pun.explanation[object].explanationContent)) {
+            nextButton2Enabled = false;
+            nextPageButton2Enabled = false;
+        }
+    } 
 
     nextPageButton2Enabled = nextButton2Enabled; // set global to local value
 
@@ -468,6 +516,7 @@ function checkExplanationsCompleted() {
     let nextButton2Enabled = true;
     let scrollToIndex = false;
     let explanationContainersMoreThanZero = true;
+    const regex = new RegExp(/<|>/gm);
 
     if (Object.keys(pun.explanation).length < 1) {
         nextButton2Enabled = false;
@@ -487,6 +536,19 @@ function checkExplanationsCompleted() {
             const punContentHelper = document.getElementById(`punExplanationHelper-${pun.explanation[object].id}`);
             punContentHelper.style.display = "block";
         } 
+        if (regex.test(pun.explanation[object].explanationContent)) {
+            nextButton2Enabled = false;
+            if (scrollToIndex === false) scrollToIndex = pun.explanation[object].id;
+
+            // add the styling for error
+            const errorDiv = document.getElementById(`punDivInner-${pun.explanation[object].id}`);
+            errorDiv.classList.add('border-red-700');
+            errorDiv.classList.add('border-2');
+
+            const punContentHelper = document.getElementById(`punExplanationHelperSpecialCharacterError-${pun.explanation[object].id}`);
+            punContentHelper.style.display = "block";
+        } 
+
     }
 
     if (nextButton2Enabled === false) {
