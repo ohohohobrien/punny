@@ -1508,6 +1508,10 @@ input:checked ~ .dot {
     padding-left: 2.5rem;
   }
 
+  .md\:text-center{
+    text-align: center;
+  }
+
   .md\:text-2xl{
     font-size: 1.5rem;
     line-height: 2rem;
@@ -1566,6 +1570,11 @@ input:checked ~ .dot {
 
   .lg\:pr-5{
     padding-right: 1.25rem;
+  }
+
+  .lg\:text-5xl{
+    font-size: 3rem;
+    line-height: 1;
   }
 }
 
