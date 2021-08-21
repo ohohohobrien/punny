@@ -95,14 +95,41 @@
                 </div>
             </main>
 
-            <section class="px-2 py-2 md:px-10">
-                <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-5 pb-5 rounded-sm rounded-br-none shadow-2xl">
-                    <div class="flex justify-start">
-                        <p class="text-3xl italic font-thin dark:text-yellow-400">search:</p>
-                        <input id="searchBar" class="text-xl ml-10 text-shadow-md w-full p-2 rounded-sm resize-y bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="searchBar" cols="2" rows="2" placeholder="keywords here"></input>
+            <section class="px-2 py-2 mt-5 md:px-10">
+                <div class="bg-yellow-300 dark:bg-gray-800 rounded-sm shadow-2xl">
+                    <button class="w-full" type="button" @click="selected !== 3 ? selected = 3 : selected = null" aria-label="explanantion">
+                        <div class="flex justify-between items-center px-5 py-5 dark:text-yellow-400">
+                            <p class="text-3xl italic font-thin"><span class="font-normal not-italic">💯</span> pun of the day</p>
+                            <svg class="w-6 h-6 align-bottom content-end" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </button>
+                    <div class="text-2xl max-h-0 relative overflow-hidden transition-all duration-700 px-5" x-ref="container3" x-bind:style="selected == 3 ? 'max-height: ' + $refs.container3.scrollHeight + 'px' : ''">
+                        <a href="./index.html">
+                            <section class="px-2 py-2 my-2 mb-4 md:px-10 border-double border-8 border-black dark:border-yellow-400 hover:bg-yellow-400 dark:hover:bg-gray-900">
+                                <div class="px-5 py-5 rounded-sm divide-y-2 divide-black dark:divide-yellow-400">
+                                    <p class="text-4xl text-shadow-md my-6 md:text-center">Why did <span class="text-white dark:text-yellow-400 font-bold">Adele</span> cross the road? </br></br> To say <span class="text-white dark:text-yellow-400 font-bold">hello from the other side</span>.</p>
+                                </div>
+                                <div class="px-5 pb-5 rounded-sm divide-y-2 divide-black dark:divide-yellow-400">
+                                    <p class="text-2xl text-shadow-md my-6 italic underline md:text-center dark:text-yellow-400">go to pun</p>
+                                </div>
+                            </section>
+                        </a>
                     </div>
                 </div>
-                <div class="flex justify-end">
+            </section>
+
+            <section class="px-2 py-2 md:px-10 mt-5">
+                <div class="bg-yellow-300 dark:bg-gray-800 px-5 py-5 pb-5 rounded-sm rounded-br-none shadow-2xl">
+                    <div class="w-auto md:flex md:justify-start">
+                        <p class="md:flex-none text-3xl italic font-thin dark:text-yellow-400 mr-10">
+                            <span class="font-normal not-italic">🔎</span>
+                            search:
+                        </p>
+                        <br class="md:hidden">
+                        <input id="searchBar" class="md:flex-1 sm:px-2 text-xl text-shadow-md w-full p-2 rounded-sm resize-y bg-yellow-100 dark:bg-gray-600 dark:text-yellow-300 focus:bg-yellow-200 dark:hover:border-yellow-400 dark:focus:bg-black-700 transform ease-in-out duration-500" name="searchBar" cols="1" rows="1" placeholder="keywords here"></input>
+                    </div>
+                </div>
+                <div class="w-auto flex justify-end">
                     <button id="searchButton" class="bg-yellow-300 hover:bg-yellow-400 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-900 rounded-sm rounded-t-none shadow-2xl h-8 w-12 md:h-14 md:w-24 lg:h-16 lg:w-32 transform ease-in-out duration-500" aria-label="complete">
                         <svg class="w-6 h-6 mx-auto" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                     </button>
@@ -110,11 +137,11 @@
             </section>
             
             <div class="">
-                <section class="px-2 py-2 mt-5 md:pl-10">
+                <section class="px-2 py-2 mt-5 md:px-10">
                     <div class="bg-yellow-300 dark:bg-gray-800 rounded-sm shadow-2xl">
-                        <button class="w-full" type="button" @click="selected !== 1 ? selected = 1 : selected = null" aria-label="explanantion">
+                        <button class="w-full" type="button" @click="selected !== 1 ? selected = 1 : selected = null" aria-label="what is this site?">
                             <div class="flex justify-between items-center px-5 py-5 dark:text-yellow-400">
-                                <p class="text-3xl italic font-thin">what is this site?</p>
+                                <p class="text-3xl italic font-thin"><span class="font-normal not-italic">🤷</span> what is this site?</p>
                                 <svg class="w-6 h-6 align-bottom content-end" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
                         </button>
